@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- header>a[href='/']>img[src='../img/logo.png' alt='Logo netflix']{}^nav>a[href='/']{Filmes}+a[href='#']{Series}
+    main#netflix>section.categoria>p.categoria-titulo{Ação}+div.filmes
+    (a>article>img[src='#']+div.informacoes>p.nome{Interestelar}+p.duracao{Duracação 20min}+span.ano{2014})*3 -->
+
+    <!-- header>a[href='/']>img[src='../img/logo.png' alt='Logo netflix']{}^nav>a[href='/']{Filmes}+a[href='#']{Series}^^main#netflix>section.categoria>p.categoria-titulo{Ação}+div.filmes>(a>article>img[src='#']+div.informacoes>p.nome{Interestelar}+p.duracao{Duracação 20min}+span.ano{2014})*5 -->
+
+    <header>
+        <a href="/"><img src="../img/logo.png" alt="Logo netflix"></a>
+        <nav>
+            <a href="/">Filmes</a>
+            <a href="#">Series</a>
+        </nav>
+    </header>
+    
+    <main id="netflix">
+
+        <!-- <section class="categoria">
+            <p class="categoria-titulo">Ação</p>
+            <div class="filmes">
+                <a>
+                    <article>
+                        <img src="https://classic.exame.com/wp-content/uploads/2016/09/size_960_16_9_interstellar-023.jpg?quality=70&strip=info&w=960" alt="#">
+                        <div class="informacoes">
+                            <p class="nome">Interestelar</p>
+                            <p class="duracao">Duração 20min</p>
+                            <span class="ano">2014</span>
+                        </div>
+                    </article>
+                </a>
+            </div>
+        </section> -->
+
+    </main>
+
+
+    <script>
+        async function carregarFilmes() {
+            const response = await fetch('http://localhost:3000/filmes');
+            const data = await response.json();
+
+            const main = document.getElementById('netflix');
+
+            const filmesCategorias = data.reduce((acc, cur) => {
+                if (cur.categoria in acc) {
+                    acc[cur.categoria].push(cur)
+                } else {
+                    acc[cur.categoria] = [cur]
+                }
+
+                return acc;
+            }, [])
+
+            for (const iterator in filmesCategorias) {
+                const sessao = document.createElement('section');
+                sessao.setAttribute('class', 'categoria');
+                
+                const titulo = document.createElement('p');
+                titulo.setAttribute('class', 'categoria-titulo')
+                titulo.innerText = iterator;
+
+                sessao.insertAdjacentElement('afterbegin', titulo);
+
+                main.insertAdjacentElement('afterbegin', sessao)
+
+                const divFilme = document.createElement('div');
+                divFilme.setAttribute('class', 'filmes')
+                sessao.insertAdjacentElement('beforeend', divFilme)
+
+                for (const filme of filmesCategorias[iterator]) {
+                    const filmeHTML = `
+                    <a href="/filme/?id=${filme.id}">
+                        <article>
+                            <img src="${filme.imagem}" alt="#">
+                            <div class="informacoes">
+                                <p class="nome">${filme.nome}</p>
+                                <p class="duracao">Duração ${filme.duracao_min}min</p>
+                                <span class="ano">${filme.ano}</span>
+                            </div>
+                        </article>
+                    </a>`
+                    divFilme.insertAdjacentHTML('afterbegin', filmeHTML)
+                }
+            }
+        }
+
+        carregarFilmes()
+
+    </script>
+</body>
+</html>

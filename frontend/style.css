@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #141414;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 26px 60px;
+}
+
+header img {
+    margin-right: 50px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: 300ms ease;
+}
+
+nav a:hover {
+    filter: brightness(.8);
+}
+
+#netflix {
+    padding: 60px;
+}
+
+.categoria + .categoria {
+    margin-top: 30px;
+}
+
+.categoria .categoria-titulo {
+    font-size: 26px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.filmes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filmes article {
+    border-radius: 4px;
+    width: 285px;
+    height: 160px;
+    background-color: blue;
+    transition: 300ms ease;
+    position: relative;
+    overflow: hidden;
+}
+
+article > .informacoes {
+    position: absolute;
+    transition: 200ms ease-in;
+    top: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.4);
+    color: #fff;
+    padding: 10px;
+    border-top-left-radius: 18px;
+}
+
+.informacoes > p {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.informacoes > .nome {
+    font-size: 24px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.informacoes > .ano {
+    display: inline-block;
+    padding: 4px;
+    border-radius: 4px;
+    background: rgb(165, 165, 29);
+    margin-top: 10px;
+}
+
+article:hover .informacoes {
+    top: 30%;
+}
+
+.filmes article:hover {
+    transform: scale(1.02);
+}
+
+article img {
+    width: 100%;
+}
